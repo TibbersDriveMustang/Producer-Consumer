@@ -7,9 +7,59 @@
 //
 
 #include <iostream>
+#include <unistd.h>
+#include "dataStructures.h"
+#include "producerFunctions.h"
+#include "consumerFunctions.h"
 
+using namespace std;
+
+pthread_t producerCreater,consumerCreater;
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+    
+    cout<<"Enter the number of producers"<<endl;
+    cin>>numProducer;
+    
+    cout<<"Enter the number of consumers"<<endl;
+    cin>>numConsumer;
+    
+    pthread_create(&producerCreater, NULL, ProducerCreation, (void*) numProducer);
+    pthread_create(&consumerCreater, NULL, ConsumerCreation, (void*) numConsumer);
+    //sleep(10);
+    //Without waiting,main thread will not wait to terminate everything
+    
+    pthread_join(producerCreater, NULL);
+    //waiting for termination
+    sleep(10);
+    //Don`t use multiprocess
+/*    pid_t producer,consumer;
+    if ((producer = fork()) < 0) {
+        perror("fork");
+        abort();
+    }
+    else if (producer == 0){
+        //producerRunning();
+        printf("Running producers` threads\n");
+        producerGroup(numProducer);
+    }
+    
+    if (producer != 0) {
+        if((consumer = fork()) < 0){
+            perror("fork");
+            abort();
+        }
+    }
+    else if( consumer == 0){
+        //consumerRunning();
+        printf("Running consumers` threads\n");
+        consumerGroup(numConsumer);
+    }
+    
+    //waitForTermination();
+    if(producer != 0 && consumer != 0){
+        sleep(10);
+        printf("Terminated\n");
+    }
+ 
+ */
 }
