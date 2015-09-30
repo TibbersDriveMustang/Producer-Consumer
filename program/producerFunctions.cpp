@@ -35,8 +35,8 @@ void* Create_ProducerThreads(void* num){
     for (int i = 0; i < numToProduce; i++) {
         itemProduced item;
         item.producerID = threadNum;
-        item.createdNumber = i;//Create_RandomNum(i);       *****
-     
+        item.createdNumber = i;//Create_RandomNum(i);       ******
+        sleep(0.5);
         printf("Created num: %d(ID:%d)\n",item.createdNumber,item.producerID);
         //sem_wait(&semBuffer);
         //itemBuffer.push(item);
