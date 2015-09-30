@@ -9,11 +9,14 @@
 #include <stdio.h>
 #include <iostream>
 #include "consumerFunctions.h"
+#include "dataStructures.h"
 
 using namespace std;
+extern queue<itemProduced> itemBuffer;
+
 
 void* Create_ConsumerThreads(void* num){
-    long int threadNum = (long int) num;
+    long int threadNum = (long int) num + 1000000 + 1;
     printf("Consumer(ID:%ld) created\n",threadNum);
     return NULL;
 }

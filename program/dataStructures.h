@@ -20,7 +20,7 @@ struct itemProduced{
 
 struct itemConsumed{
     int producerID;
-    int consumerID;
+    long consumerID;
     int consumedNumber;
 };
 

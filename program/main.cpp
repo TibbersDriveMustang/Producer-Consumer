@@ -50,7 +50,9 @@ int main(int argc, const char * argv[]) {
     
     pthread_join(producerCreater, NULL);
     //waiting for termination
-    sleep(10);
+    
+    int size = itemBuffer.size();
+    printf("Queuee size: %d\n",size);
     //Don`t use multiprocess
 /*    pid_t producer,consumer;
     if ((producer = fork()) < 0) {

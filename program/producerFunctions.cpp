@@ -12,6 +12,7 @@
 #include "dataStructures.h"
 #include <time.h>
 
+
 using namespace std;
 
 extern sem_t semInputDoc;
@@ -22,22 +23,25 @@ extern int numToProduce;
 extern queue<itemProduced> itemBuffer;
 
 
-int Create_RandomNum(int factor){
+/*int Create_RandomNum(int factor){
     srand(time(0));   //**********
     int num;
     num = (rand() * factor) % 10000 + 1;
     sleep(1);
     return num;
-}
+}*/
 
 void* Create_ProducerThreads(void* num){
     long int threadNum = (long int) num;
     printf("Producer(ID:%ld) created\n",threadNum);
+    
+    FILE *pFile;
+    
     for (int i = 0; i < numToProduce; i++) {
         sleep(1);
         int numTemp;
         itemProduced item;
-        item.producerID = threadNum;
+        item.producerID = threadNum + 1;
         
         srand(time(NULL) + i + item.producerID);
 
@@ -46,9 +50,18 @@ void* Create_ProducerThreads(void* num){
         numTemp = rand() % 10000 + 1;
         item.createdNumber = numTemp ;//Create_RandomNum(i);       ******
         printf("Created num: %d %d(ID:%d)\n",i,item.createdNumber,item.producerID);
-        //sem_wait(&semBuffer);
-        //itemBuffer.push(item);
-        //sem_post(&semBuffer);
+        sem_wait(&semBuffer);
+        itemBuffer.push(item);
+        sem_post(&semBuffer);
+        
+        sem_wait(&semInputDoc);
+        pFile = fopen("../../../Input-numbers", "a+");
+        if(pFile == NULL)
+            perror("Error opening file");
+        else{
+            fprintf(pFile, "Producer ID: %d,Item Number: %d;\n",item.producerID,item.createdNumber);
+        }
+        sem_post(&semInputDoc);
 
         //sem_wait(&semInputDoc);
         //WriteToFile(item);
@@ -64,6 +77,9 @@ void* ProducerCreation(void* numProducer){
     for (int i = 0; i < num; i++) {
         pthread_create(&producerThreads[i], NULL, Create_ProducerThreads, (void*) i);
         sleep(0.5);
+    }
+    for (int i = 0; i < num;i++){
+        pthread_join(producerThreads[i], NULL);
     }
     return NULL;
 }
