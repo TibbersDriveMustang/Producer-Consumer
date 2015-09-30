@@ -17,6 +17,7 @@ using namespace std;
 extern sem_t semInputDoc;
 extern sem_t semBuffer;
 
+
 extern int numToProduce;
 extern queue<itemProduced> itemBuffer;
 
@@ -33,11 +34,18 @@ void* Create_ProducerThreads(void* num){
     long int threadNum = (long int) num;
     printf("Producer(ID:%ld) created\n",threadNum);
     for (int i = 0; i < numToProduce; i++) {
+        sleep(1);
+        int numTemp;
         itemProduced item;
         item.producerID = threadNum;
-        item.createdNumber = i;//Create_RandomNum(i);       ******
-        sleep(0.5);
-        printf("Created num: %d(ID:%d)\n",item.createdNumber,item.producerID);
+        
+        srand(time(NULL) + i + item.producerID);
+
+
+
+        numTemp = rand() % 10000 + 1;
+        item.createdNumber = numTemp ;//Create_RandomNum(i);       ******
+        printf("Created num: %d %d(ID:%d)\n",i,item.createdNumber,item.producerID);
         //sem_wait(&semBuffer);
         //itemBuffer.push(item);
         //sem_post(&semBuffer);

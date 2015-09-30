@@ -32,6 +32,8 @@ int main_TerminateSignal = 0;
 pthread_t producerCreater,consumerCreater;
 int main(int argc, const char * argv[]) {
     
+    sem_init(&semBuffer, 0, 1);
+    
     cout<<"Enter the number of producers"<<endl;
     cin>>numProducer;
     
