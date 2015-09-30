@@ -9,14 +9,44 @@
 #include <stdio.h>
 #include <iostream>
 #include "producerFunctions.h"
+#include "dataStructures.h"
+#include <time.h>
+
 using namespace std;
 
+extern sem_t semInputDoc;
+extern sem_t semBuffer;
+
+extern int numToProduce;
+extern queue<itemProduced> itemBuffer;
+
+
+int Create_RandomNum(int factor){
+    srand(time(0));   //**********
+    int num;
+    num = (rand() * factor) % 10000 + 1;
+    sleep(1);
+    return num;
+}
 
 void* Create_ProducerThreads(void* num){
-    //itemProduced itemValue;
     long int threadNum = (long int) num;
     printf("Producer(ID:%ld) created\n",threadNum);
-    
+    for (int i = 0; i < numToProduce; i++) {
+        itemProduced item;
+        item.producerID = threadNum;
+        item.createdNumber = i;//Create_RandomNum(i);       ******
+        sleep(0.5);
+        printf("Created num: %d(ID:%d)\n",item.createdNumber,item.producerID);
+        //sem_wait(&semBuffer);
+        //itemBuffer.push(item);
+        //sem_post(&semBuffer);
+
+        //sem_wait(&semInputDoc);
+        //WriteToFile(item);
+        //sem_post(&semInputDoc);
+        
+    }
     return NULL;
 }
 

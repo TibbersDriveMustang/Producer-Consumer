@@ -14,6 +14,21 @@
 
 using namespace std;
 
+int numToProduce;
+int numProducer;
+int numConsumer;
+int bufferCapacity;
+
+sem_t semInputDoc;
+sem_t semPrimeDoc;
+sem_t semNonPrimeDoc;
+sem_t semBuffer;
+
+queue<itemProduced> itemBuffer;
+
+int main_TerminateSignal = 0;
+
+
 pthread_t producerCreater,consumerCreater;
 int main(int argc, const char * argv[]) {
     
@@ -22,6 +37,9 @@ int main(int argc, const char * argv[]) {
     
     cout<<"Enter the number of consumers"<<endl;
     cin>>numConsumer;
+    
+    cout<<"Enter the amount of number for each producer to create"<<endl;
+    cin>>numToProduce;
     
     pthread_create(&producerCreater, NULL, ProducerCreation, (void*) numProducer);
     pthread_create(&consumerCreater, NULL, ConsumerCreation, (void*) numConsumer);

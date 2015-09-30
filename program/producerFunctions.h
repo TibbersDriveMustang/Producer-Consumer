@@ -14,4 +14,6 @@
 void* ProducerCreation(void* );
 void* Create_ProducerThreads(void* );
 
+int Create_RandomNum(int );
+
 #endif /* producerFunctions_h */

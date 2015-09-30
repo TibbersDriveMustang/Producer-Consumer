@@ -9,15 +9,9 @@
 #ifndef dataStructures_h
 #define dataStructures_h
 
-#include <semaphore.h>
 #include <queue>
 #include <pthread.h>
-using namespace std;
-
-int numToProduce;
-int numProducer;
-int numConsumer;
-int bufferCapacity;
+#include <semaphore.h>
 
 struct itemProduced{
     int producerID;
@@ -30,14 +24,7 @@ struct itemConsumed{
     int consumedNumber;
 };
 
-sem_t semInputDoc;
-sem_t semPrimeDoc;
-sem_t semNonPrimeDoc;
-sem_t semBuffer;
 
-queue<itemProduced> itemBuffer;
-
-int main_TerminateSignal = 0;
 
 
 
