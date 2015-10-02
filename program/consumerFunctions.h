@@ -14,4 +14,6 @@
 void* ConsumerCreation(void* );
 void* Create_ConsumerThreads(void* );
 
+bool isPrime(int );
+
 #endif /* consumerFunctions_h */

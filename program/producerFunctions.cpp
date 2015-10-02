@@ -20,7 +20,7 @@ extern sem_t semBuffer;
 
 
 extern int numToProduce;
-extern queue<itemProduced> itemBuffer;
+extern queue<itemProduced> *itemBuffer;
 
 
 /*int Create_RandomNum(int factor){
@@ -49,9 +49,10 @@ void* Create_ProducerThreads(void* num){
 
         numTemp = rand() % 10000 + 1;
         item.createdNumber = numTemp ;//Create_RandomNum(i);       ******
-        printf("Created num: %d %d(ID:%d)\n",i,item.createdNumber,item.producerID);
+        printf("Created num: %d(ID:%d)\n",item.createdNumber,item.producerID);
         sem_wait(&semBuffer);
-        itemBuffer.push(item);
+        itemBuffer->push(item);
+        printf("buffer size:%d\n",itemBuffer->size());
         sem_post(&semBuffer);
         
         sem_wait(&semInputDoc);
@@ -60,12 +61,9 @@ void* Create_ProducerThreads(void* num){
             perror("Error opening file");
         else{
             fprintf(pFile, "Producer ID: %d,Item Number: %d;\n",item.producerID,item.createdNumber);
+            fclose(pFile);
         }
         sem_post(&semInputDoc);
-
-        //sem_wait(&semInputDoc);
-        //WriteToFile(item);
-        //sem_post(&semInputDoc);
         
     }
     return NULL;

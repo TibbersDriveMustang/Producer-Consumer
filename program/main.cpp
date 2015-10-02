@@ -24,7 +24,7 @@ sem_t semPrimeDoc;
 sem_t semNonPrimeDoc;
 sem_t semBuffer;
 
-queue<itemProduced> itemBuffer;
+queue<itemProduced> *itemBuffer;
 
 int main_TerminateSignal = 0;
 
@@ -33,6 +33,10 @@ pthread_t producerCreater,consumerCreater;
 int main(int argc, const char * argv[]) {
     
     sem_init(&semBuffer, 0, 1);
+    sem_init(&semInputDoc, 0, 1);
+    
+
+    
     
     cout<<"Enter the number of producers"<<endl;
     cin>>numProducer;
@@ -43,6 +47,11 @@ int main(int argc, const char * argv[]) {
     cout<<"Enter the amount of number for each producer to create"<<endl;
     cin>>numToProduce;
     
+    cout<<"Enter the capacity of buffer"<<endl;
+    cin>>bufferCapacity;
+    
+    itemBuffer = new queue<itemProduced>[bufferCapacity];
+    
     pthread_create(&producerCreater, NULL, ProducerCreation, (void*) numProducer);
     pthread_create(&consumerCreater, NULL, ConsumerCreation, (void*) numConsumer);
     //sleep(10);
@@ -51,8 +60,8 @@ int main(int argc, const char * argv[]) {
     pthread_join(producerCreater, NULL);
     //waiting for termination
     
-    int size = itemBuffer.size();
-    printf("Queuee size: %d\n",size);
+    int size = itemBuffer->size();
+    printf("Queue size: %d\n",size);
     //Don`t use multiprocess
 /*    pid_t producer,consumer;
     if ((producer = fork()) < 0) {
