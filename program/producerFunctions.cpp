@@ -54,7 +54,7 @@ void* Create_ProducerThreads(void* num){
        
         printf("Created num: %d(ID:%d)\n",item.createdNumber,item.producerID);
         itemBuffer->push(item);
-        printf("buffer size:%d\n",itemBuffer->size());
+        printf("Buffer Size:%d\n",itemBuffer->size());
         
         pFile = fopen("../../../Input-numbers", "a+");
         if(pFile == NULL)

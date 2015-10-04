@@ -40,9 +40,7 @@ int main(int argc, const char * argv[]) {
     if(semBuffer == NULL){
         printf("Semaphore initialization Failure\n");
     }
-    else{
-        printf("SemBuffer Initial Value:%ld\n",semBuffer);
-    }
+    
     cout<<"Enter the number of producers"<<endl;
     cin>>numProducer;
     
@@ -54,7 +52,6 @@ int main(int argc, const char * argv[]) {
     
     cout<<"Enter the capacity of buffer"<<endl;
     cin>>bufferCapacity;
-
     
     itemBuffer = new queue<itemProduced>[bufferCapacity];
     
