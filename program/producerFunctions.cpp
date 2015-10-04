@@ -16,8 +16,8 @@
 using namespace std;
 
 extern sem_t semInputDoc;
-extern sem_t semBuffer;
-
+//extern sem_t* semBuffer;
+extern dispatch_semaphore_t semBuffer;
 
 extern int numToProduce;
 extern queue<itemProduced> *itemBuffer;
@@ -33,7 +33,7 @@ extern queue<itemProduced> *itemBuffer;
 
 void* Create_ProducerThreads(void* num){
     long int threadNum = (long int) num;
-    printf("Producer(ID:%ld) created\n",threadNum);
+    printf("Producer(ID:%ld) created\n",threadNum + 1);
     
     FILE *pFile;
     
@@ -48,14 +48,14 @@ void* Create_ProducerThreads(void* num){
 
 
         numTemp = rand() % 10000 + 1;
-        item.createdNumber = numTemp ;//Create_RandomNum(i);       ******
+        item.createdNumber = numTemp ;//Create_RandomNum(i);
+       
+        dispatch_semaphore_wait(semBuffer, DISPATCH_TIME_FOREVER);
+       
         printf("Created num: %d(ID:%d)\n",item.createdNumber,item.producerID);
-        sem_wait(&semBuffer);
         itemBuffer->push(item);
         printf("buffer size:%d\n",itemBuffer->size());
-        sem_post(&semBuffer);
         
-        sem_wait(&semInputDoc);
         pFile = fopen("../../../Input-numbers", "a+");
         if(pFile == NULL)
             perror("Error opening file");
@@ -63,7 +63,7 @@ void* Create_ProducerThreads(void* num){
             fprintf(pFile, "Producer ID: %d,Item Number: %d;\n",item.producerID,item.createdNumber);
             fclose(pFile);
         }
-        sem_post(&semInputDoc);
+        dispatch_semaphore_signal(semBuffer);
         
     }
     return NULL;

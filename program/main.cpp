@@ -22,9 +22,14 @@ int bufferCapacity;
 sem_t semInputDoc;
 sem_t semPrimeDoc;
 sem_t semNonPrimeDoc;
-sem_t semBuffer;
+//sem_t *semBuffer;
 
-queue<itemProduced> *itemBuffer;
+//dispatch_semaphore_t
+dispatch_semaphore_t semBuffer = dispatch_semaphore_create(1);
+//dispatch_semaphore_t
+
+
+queue<itemProduced>  *itemBuffer;
 
 int main_TerminateSignal = 0;
 
@@ -32,12 +37,12 @@ int main_TerminateSignal = 0;
 pthread_t producerCreater,consumerCreater;
 int main(int argc, const char * argv[]) {
     
-    sem_init(&semBuffer, 0, 1);
-    sem_init(&semInputDoc, 0, 1);
-    
-
-    
-    
+    if(semBuffer == NULL){
+        printf("Semaphore initialization Failure\n");
+    }
+    else{
+        printf("SemBuffer Initial Value:%ld\n",semBuffer);
+    }
     cout<<"Enter the number of producers"<<endl;
     cin>>numProducer;
     
@@ -49,19 +54,20 @@ int main(int argc, const char * argv[]) {
     
     cout<<"Enter the capacity of buffer"<<endl;
     cin>>bufferCapacity;
+
     
     itemBuffer = new queue<itemProduced>[bufferCapacity];
     
     pthread_create(&producerCreater, NULL, ProducerCreation, (void*) numProducer);
     pthread_create(&consumerCreater, NULL, ConsumerCreation, (void*) numConsumer);
-    //sleep(10);
-    //Without waiting,main thread will not wait to terminate everything
-    
+
+    //waiting for termination    
     pthread_join(producerCreater, NULL);
-    //waiting for termination
-    
+
     int size = itemBuffer->size();
-    printf("Queue size: %d\n",size);
+    printf("Final Buffer Size: %d\n",size);
+
+    
     //Don`t use multiprocess
 /*    pid_t producer,consumer;
     if ((producer = fork()) < 0) {
