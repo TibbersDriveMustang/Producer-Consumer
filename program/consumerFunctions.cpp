@@ -18,6 +18,14 @@ extern queue<itemProduced> *itemBuffer;
 extern dispatch_semaphore_t semBuffer;
 
 bool isPrime(int num){
+    if (num < 2) {
+        return FALSE;
+    }
+    for (int i = 2; i < num/2 + 1; i++) {
+        if(num % i == 0){
+            return FALSE;
+        }
+    }
     return true;
 }
 
@@ -38,15 +46,20 @@ void* Create_ConsumerThreads(void* num){
             printf("Buffer Size:%d\n",itemBuffer->size());
             
             if(isPrime(tempItem.createdNumber)){
-                pFile = fopen("../../../Prime-numbers", "a+");
+                pFile = fopen("Prime-Numbers", "a+");
                 if (pFile == NULL) {
                     perror("Error opening file");
                 }
-                fprintf(pFile, "Producer ID: %d,Consumer ID: %ld,Item Number: %d;\n",tempItem.producerID,threadNum,tempItem.createdNumber);
+                fprintf(pFile, "Is Prime=>Producer ID: %d,Consumer ID: %ld,Item Number: %d;\n",tempItem.producerID,threadNum,tempItem.createdNumber);
                 fclose(pFile);
             }
             else{
-                printf("Input to NonPrimeDoc\n");
+                pFile = fopen("Non-Prime-Numbers", "a+");
+                if(pFile == NULL){
+                    perror("Error opening file");
+                }
+                fprintf(pFile, "Not Prime=>Producer ID: %d,Consumer ID: %ld,Item Number: %d;\n",tempItem.producerID,threadNum,tempItem.createdNumber);
+                fclose(pFile);
             }
          }
         

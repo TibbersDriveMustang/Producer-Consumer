@@ -60,9 +60,8 @@ int main(int argc, const char * argv[]) {
 
     //waiting for termination    
     pthread_join(producerCreater, NULL);
-
-    int size = itemBuffer->size();
-    printf("Final Buffer Size: %d\n",size);
+    
+    while(!itemBuffer->empty());
 
     
     //Don`t use multiprocess

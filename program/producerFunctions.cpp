@@ -56,7 +56,7 @@ void* Create_ProducerThreads(void* num){
         itemBuffer->push(item);
         printf("Buffer Size:%d\n",itemBuffer->size());
         
-        pFile = fopen("../../../Input-numbers", "a+");
+        pFile = fopen("Input-numbers", "a+");
         if(pFile == NULL)
             perror("Error opening file");
         else{
