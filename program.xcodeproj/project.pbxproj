@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70217D9F1BC0D47C001A4DE6 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 70217D9E1BC0D47C001A4DE6 /* Makefile */; settings = {ASSET_TAGS = (); }; };
 		70803CB31BB9C90700D5E79A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 70803CB21BB9C90700D5E79A /* main.cpp */; };
 		70803CBD1BB9FD0D00D5E79A /* producerFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 70803CBC1BB9FD0D00D5E79A /* producerFunctions.cpp */; settings = {ASSET_TAGS = (); }; };
 		70803CC31BBA00EA00D5E79A /* consumerFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 70803CC21BBA00EA00D5E79A /* consumerFunctions.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -25,6 +26,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		70217D9E1BC0D47C001A4DE6 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		70803CAF1BB9C90700D5E79A /* program */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = program; sourceTree = BUILT_PRODUCTS_DIR; };
 		70803CB21BB9C90700D5E79A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		70803CB91BB9DF4A00D5E79A /* dataStructures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dataStructures.h; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 		70803CA61BB9C90700D5E79A = {
 			isa = PBXGroup;
 			children = (
+				70217D9E1BC0D47C001A4DE6 /* Makefile */,
 				70803CB11BB9C90700D5E79A /* program */,
 				70803CB01BB9C90700D5E79A /* Products */,
 			);
@@ -132,6 +135,7 @@
 			files = (
 				70803CC31BBA00EA00D5E79A /* consumerFunctions.cpp in Sources */,
 				70803CB31BB9C90700D5E79A /* main.cpp in Sources */,
+				70217D9F1BC0D47C001A4DE6 /* Makefile in Sources */,
 				70803CBD1BB9FD0D00D5E79A /* producerFunctions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,6 +253,7 @@
 				70803CB81BB9C90700D5E79A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
