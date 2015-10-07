@@ -79,5 +79,6 @@ void* ProducerCreation(void* numProducer){
     for (int i = 0; i < num;i++){
         pthread_join(producerThreads[i], NULL);
     }
+    printf("**************Last Producer Terminated**************\n")
     return NULL;
 }
