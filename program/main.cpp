@@ -18,6 +18,7 @@ int numToProduce;
 int numProducer;
 int numConsumer;
 int bufferCapacity;
+boolean_t terminateFlag = 0;
 
 sem_t semInputDoc;
 sem_t semPrimeDoc;
@@ -61,7 +62,7 @@ int main(int argc, const char * argv[]) {
     //waiting for termination    
     pthread_join(producerCreater, NULL);
     
-    while(!itemBuffer->empty());
+    pthread_join(consumerCreater, NULL);
 
     
     //Don`t use multiprocess

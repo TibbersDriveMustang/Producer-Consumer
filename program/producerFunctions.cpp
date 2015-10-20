@@ -22,6 +22,8 @@ extern dispatch_semaphore_t semBuffer;
 extern int numToProduce;
 extern queue<itemProduced> *itemBuffer;
 
+extern boolean_t terminateFlag;
+extern int bufferCapacity;
 
 /*int Create_RandomNum(int factor){
     srand(time(0));   //**********
@@ -53,7 +55,11 @@ void* Create_ProducerThreads(void* num){
         dispatch_semaphore_wait(semBuffer, DISPATCH_TIME_FOREVER);
        
         printf("Created num: %d(ID:%d)\n",item.createdNumber,item.producerID);
-        itemBuffer->push(item);
+        if(itemBuffer->size() < bufferCapacity){
+            itemBuffer->push(item);
+        }
+        else
+            printf("Buffer is FULL,Packet DROPPED/n");
         printf("Buffer Size:%d\n",itemBuffer->size());
         
         pFile = fopen("Input-numbers", "a+");
@@ -79,6 +85,7 @@ void* ProducerCreation(void* numProducer){
     for (int i = 0; i < num;i++){
         pthread_join(producerThreads[i], NULL);
     }
-    printf("**************Last Producer Terminated**************\n")
+    terminateFlag = true;
+    printf("**************Last Producer Terminated**************\n");
     return NULL;
 }
