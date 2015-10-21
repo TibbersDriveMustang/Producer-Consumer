@@ -1,4 +1,5 @@
-#Define required macros here
+# Define required macros here
+# Team member: Hongyi Guo
 SHELL = /bin/sh
 
 File = program

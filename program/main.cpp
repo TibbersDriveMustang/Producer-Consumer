@@ -5,6 +5,7 @@
 //  Created by Hongyi Guo on 9/28/15.
 //  Copyright © 2015 Hongyi Guo. All rights reserved.
 //
+//  Team member: Hongyi Guo
 
 #include <iostream>
 #include <unistd.h>
@@ -62,7 +63,7 @@ int main(int argc, const char * argv[]) {
     //waiting for termination    
     pthread_join(producerCreater, NULL);
     
-    pthread_join(consumerCreater, NULL);
+    while (itemBuffer->size() != 0);
 
     
     //Don`t use multiprocess
